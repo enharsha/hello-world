@@ -1,0 +1,13 @@
+variables p q r :Prop
+
+/-commmutativity of ∧ and ∨ -/
+/-proof without using assume and show-/
+example : p ∧ q ↔ q ∧ p:= 
+iff.intro
+ (λ h1:p∧q, and.intro (and.right h1) (and.left h1)) 
+ (λ h2:q∧p, and.intro (and.right h2) (and.left h2)) 
+/-proof using assume-/
+example : p ∨ q ↔ q ∨ p:=
+ iff.intro
+  (assume h:p ∨ q, or.elim h (assume h1:p,or.inr h1)(assume h2:q,or.inl h2) )
+  (assume h:q ∨ p, or.elim h (assume h1:q,or.inr h1)(assume h2:p,or.inl h2))
