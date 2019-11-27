@@ -1,0 +1,57 @@
+def dotwice (f:nat→ nat)(x:nat) := f(f x)
+def double (x:nat) := x+x
+
+def quadruple (x:nat) := double (double x)
+/-function to qudruple input using double-/
+def mult(x:nat) := dotwice double (double x)
+/-function to multiply input by 8 using dotwice and double-/
+
+/-Question 1-/
+def Dotwice (f: (nat→ nat)→ (nat→ nat)) (g: nat→ nat) (x:nat) := f (f g) x
+/-function which applies its argument twice-/
+#check Dotwice
+#reduce Dotwice dotwice double 2
+
+/-Question 2-/
+def curry (α β γ :Type) (f:α × β → γ) := λ (x:α)(y:β), f(x,y)
+#check curry
+def uncurry (α β γ :Type) (f:α → β → γ) := λ x:α × β, f x.1 x.2
+#check uncurry
+/-definitions to curry and uncurry functions-/
+
+/-Question 3-/
+universe u 
+namespace hidden 
+constant vec :Type u → nat → Type u  
+constant vec_add: Π {n:nat}, vec nat n→ vec nat n→ vec nat n 
+/-function that takes 2 vectors of same length and returns vector with sum of elements-/
+constant vec_reverse: Π {α :Type u} {n:nat}, vec α n→ vec α n 
+/-function that reverses arguments of a vector-/
+variable α :Type u 
+variable n:nat
+variables v1 v2: vec nat n 
+#check vec_reverse (vec_add v1 v2)
+#check vec_add v1 (vec_reverse v1)
+/-examples to check implicit arguments-/
+
+/-Question 4-/
+constant mat : Type u → nat → nat → Type u
+constant mat_add : Π {α :Type u}{m n:nat}, mat α m n → mat α m n → mat α m n
+/-function to add 2 matrices-/
+constant mat_mult : Π {α :Type u} {l m n: nat}, mat α l m → mat α m n → mat α l n
+/-function to multiply matrices-/
+constant mat_mult_vec : Π {α :Type u} {m n:nat}, mat α m n → vec α n → vec α m 
+/-function to multiply matrix with vector-/
+variable β  :Type u 
+variables a b c :nat
+variable M1 : mat β a b 
+variable M2 : mat β b c 
+variable M3: mat β a c
+variable v3:vec β b
+#check mat_add M1 M1
+#check mat_add M3 (mat_mult M1 M2)
+#check mat_mult (mat_add M1 M1) M2
+#check mat_mult_vec M1 v3
+/-examples of implicit arguments-/
+
+end hidden
