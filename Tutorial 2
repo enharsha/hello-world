@@ -6,6 +6,7 @@ example : p ∧ q ↔ q ∧ p:=
 iff.intro
  (λ h1:p∧q, and.intro (and.right h1) (and.left h1)) 
  (λ h2:q∧p, and.intro (and.right h2) (and.left h2)) 
+
 /-proof using assume-/
 example : p ∨ q ↔ q ∨ p:=
  iff.intro
@@ -17,3 +18,14 @@ example: (p ∧ q) ∧ r ↔ p ∧ (q ∧ r):=
 iff.intro
 (assume h:(p ∧ q) ∧ r ,⟨and.left (and.left h),⟨ and.right (and.left h),and.right h⟩ ⟩) 
 (assume h:p ∧ (q ∧ r),⟨ ⟨ and.left h,and.left (and.right h)⟩,and.right (and.right h)⟩ )
+
+example: (p ∨ q) ∨ r ↔ p ∨ (q ∨ r):=
+iff.intro
+(assume h : (p ∨ q) ∨ r,
+or.elim h 
+(assume h1 : p ∨ q, or.elim h1 (assume hp : p, or.inl hp) (assume hq : q, or.inr (or.inl hq)))
+(assume h2 : r, or.inr (or.inr h2)))
+(assume h : p ∨ (q ∨ r),
+or.elim h
+(assume h1 : p, or.inl (or.inl h1))
+(assume h2 : q ∨ r,or.elim h2 (assume hq : q, or.inl (or.inr hq)) (assume hr : r, or.inr hr)))
