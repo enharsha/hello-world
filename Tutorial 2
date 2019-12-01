@@ -29,3 +29,14 @@ or.elim h
 or.elim h
 (assume h1 : p, or.inl (or.inl h1))
 (assume h2 : q ∨ r,or.elim h2 (assume hq : q, or.inl (or.inr hq)) (assume hr : r, or.inr hr)))
+
+/-other properties-/
+example : (p → (q → r)) ↔ (p ∧ q → r) :=
+iff.intro
+(assume h: (p → (q → r)), assume h1 : p ∧ q,h h1.left h1.right)
+(assume h: (p ∧ q→r), assume h1 : p, assume h2 : q, h ⟨h1, h2⟩)
+
+example : ((p ∨ q) → r) ↔ (p → r) ∧ (q → r) :=
+iff.intro
+(assume h:((p ∨ q) → r), and.intro (assume h1 :p, h (or.inl h1)) (assume h2: q, h (or.inr h2)))
+(assume h:(p → r) ∧ (q → r), assume h0 : p ∨ q, or.elim h0 (assume h1 : p, h.left h1) (assume h2 : q, h.right h2))
