@@ -46,4 +46,6 @@ iff.intro
 (assume h : ¬(p ∨ q), and.intro (assume h1 : p, h (or.inl h1)) (assume h2 : q, h (or.inr h2)))
 (assume h : ¬p ∧ ¬q, (assume h0 : p ∨ q, or.elim h0 (assume h1 : p, absurd h1 h.left) (assume h2 : q, absurd h2 h.right)))
 
+example: ¬p ∨ ¬q → ¬(p ∧ q) :=
+assume h: ¬p ∨ ¬q, (assume h0: p ∧ q, or.elim h (assume h1 : ¬p, absurd h0.left h1) (assume h2 : ¬q, absurd h0.right h2))
 
