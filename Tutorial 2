@@ -40,3 +40,10 @@ example : ((p ∨ q) → r) ↔ (p → r) ∧ (q → r) :=
 iff.intro
 (assume h:((p ∨ q) → r), and.intro (assume h1 :p, h (or.inl h1)) (assume h2: q, h (or.inr h2)))
 (assume h:(p → r) ∧ (q → r), assume h0 : p ∨ q, or.elim h0 (assume h1 : p, h.left h1) (assume h2 : q, h.right h2))
+
+example : ¬(p ∨ q) ↔ ¬p ∧ ¬q :=
+iff.intro
+(assume h : ¬(p ∨ q), and.intro (assume h1 : p, h (or.inl h1)) (assume h2 : q, h (or.inr h2)))
+(assume h : ¬p ∧ ¬q, (assume h0 : p ∨ q, or.elim h0 (assume h1 : p, absurd h1 h.left) (assume h2 : q, absurd h2 h.right)))
+
+
