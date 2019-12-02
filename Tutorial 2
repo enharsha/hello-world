@@ -52,3 +52,7 @@ assume h: ¬p ∨ ¬q, (assume h0: p ∧ q, or.elim h (assume h1 : ¬p, absurd h
 example : ¬(p ∧ ¬p) := assume h : p ∧ ¬p,absurd h.left h.right
 
 example : p ∧ ¬q → ¬(p → q) := assume h : p ∧ ¬q, assume h1 : p → q, absurd (h1 h.left) h.right 
+
+example : ¬p → (p → q) := assume h : ¬p, assume h1 : p, absurd h1 h
+
+example: (¬p ∨ q) → (p → q):= assume h:(¬p ∨ q), (assume h1: p, or.elim h (assume h1n : ¬p, absurd h1 h1n) (assume h2 : q, h2))
