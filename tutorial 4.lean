@@ -16,8 +16,6 @@ nat.rec_on m zero (λ a pred_m,a)
 def exp (m n:nat):nat:=
 nat.rec_on n succ(zero)) (λ a exp_m_n,mult m exp_m_n) 
 
-def sub (m n:nat):nat:=
-nat.rec_on n m (λ a sub_m_n,)
 end nat
 
 inductive list (α : Type u)
